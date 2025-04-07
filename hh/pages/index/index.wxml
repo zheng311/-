@@ -1,0 +1,47 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <view class="logo-area">
+    <view class="title">五子棋</view>
+    <view class="subtitle">经典益智游戏</view>
+  </view>
+  
+  <view class="mode-select">
+    <view class="mode-title">选择游戏模式</view>
+    <view class="mode-options">
+      <view class="mode-item {{playerMode === 'single' ? 'active' : ''}}" bindtap="switchMode" data-mode="single">
+        <view class="mode-icon single"></view>
+        <view class="mode-name">单人模式</view>
+        <view class="mode-desc">挑战智能AI对手</view>
+      </view>
+      <view class="mode-item {{playerMode === 'double' ? 'active' : ''}}" bindtap="switchMode" data-mode="double">
+        <view class="mode-icon double"></view>
+        <view class="mode-name">双人模式</view>
+        <view class="mode-desc">和朋友一起玩</view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="feature-list">
+    <view class="feature-item">
+      <view class="feature-icon"></view>
+      <view class="feature-text">经典15×15棋盘</view>
+    </view>
+    <view class="feature-item">
+      <view class="feature-icon"></view>
+      <view class="feature-text">智能AI算法</view>
+    </view>
+    <view class="feature-item">
+      <view class="feature-icon"></view>
+      <view class="feature-text">精美游戏界面</view>
+    </view>
+  </view>
+  
+  <button class="start-btn" bindtap="startGame">
+    开始游戏
+    <view class="btn-arrow">→</view>
+  </button>
+  
+  <view class="version-info">
+    <text>版本 1.0.0</text>
+  </view>
+</view> 

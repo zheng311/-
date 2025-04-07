@@ -1,0 +1,65 @@
+<!--pages/game/game.wxml-->
+<view class="game-container">
+  <view class="game-header">
+    <view class="player-info {{currentPlayer === 1 ? 'active' : ''}}">
+      <view class="stone-sample black"></view>
+      <text>黑棋{{currentPlayer === 1 && !gameOver ? '(当前)' : ''}}</text>
+    </view>
+    <view class="game-status">
+      <text wx:if="{{!gameOver}}">已下 {{steps}} 步</text>
+      <text wx:else class="winner">{{winner === 1 ? '黑棋' : '白棋'}}胜利！</text>
+    </view>
+    <view class="player-info {{currentPlayer === 2 ? 'active' : ''}}">
+      <view class="stone-sample white"></view>
+      <text>白棋{{currentPlayer === 2 && !gameOver ? '(当前)' : ''}}</text>
+    </view>
+  </view>
+  
+  <view class="board-container">
+    <view class="board">
+      <view class="row" wx:for="{{board}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex">
+        <view class="cell {{(rowIndex == 0 ? 'top ' : '') + (rowIndex == boardSize-1 ? 'bottom ' : '') + (columnIndex == 0 ? 'left ' : '') + (columnIndex == boardSize-1 ? 'right' : '')}}" 
+              wx:for="{{row}}" 
+              wx:for-item="cell" 
+              wx:for-index="columnIndex" 
+              wx:key="columnIndex"
+              data-row="{{rowIndex}}" 
+              data-col="{{columnIndex}}" 
+              bindtap="placeStone">
+          <view class="stone black {{lastMove && lastMove.row === rowIndex && lastMove.col === columnIndex ? 'last-move-black' : ''}}" wx:if="{{cell === 1}}"></view>
+          <view class="stone white {{lastMove && lastMove.row === rowIndex && lastMove.col === columnIndex ? 'last-move-white' : ''}}" wx:elif="{{cell === 2}}"></view>
+          <view class="position-dot" wx:if="{{(rowIndex === 3 && columnIndex === 3) || (rowIndex === 3 && columnIndex === 11) || (rowIndex === 11 && columnIndex === 3) || (rowIndex === 11 && columnIndex === 11) || (rowIndex === 7 && columnIndex === 7)}}"></view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="coordinates">
+      <view class="coord-row">
+        <text wx:for="{{boardSize}}" wx:key="index" class="coord-label">{{index + 1}}</text>
+      </view>
+      <view class="coord-column">
+        <text wx:for="{{boardSize}}" wx:key="index" class="coord-label">{{index < 26 ? String.fromCharCode(65 + index) : ''}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="game-over-modal" wx:if="{{gameOver}}">
+    <view class="modal-content">
+      <view class="modal-title">
+        <text>游戏结束</text>
+      </view>
+      <view class="modal-message">
+        <text>{{winner === 1 ? '黑棋' : '白棋'}}获胜！共{{steps}}步</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="action-panel">
+    <button class="action-btn restart" bindtap="restartGame">重新开始</button>
+    <button class="action-btn home" bindtap="backToHome">返回主页</button>
+  </view>
+  
+  <view class="game-tips" wx:if="{{!gameOver}}">
+    <text>提示: 点击棋盘落子，五子连珠获胜</text>
+  </view>
+</view> 
